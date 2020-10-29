@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function() {
+		$('input').on('click', function() {
+			//일괄로 줄때
+			//$('img').attr('title', 'korea');
+		
+			$('img').attr('title', function() {
+				
+				// string 추출 substring(start, end)이용
+				// 마지막/와 .의 위치를 찾아서 start와 end로 이용한다.
+				
+				// src 속성의 값을 가져와라
+				vsrc = $(this).attr('src');
+				
+				start = vsrc.lastIndexOf('/') + 1;
+				end = vsrc.lastIndexOf('.')
+				
+				vtit = vsrc.substring(start, end);
+				
+				return vtit;
+				
+			})
+			
+		})
+		
+	})
+
+
+</script>
+
+<style type="text/css">
+	
+	img {
+		width: 100px;
+		height: 100px;
+	}
+
+
+</style>
+
+</head>
+<body>
+
+	<div class="box">
+		<h3>1. 속성설정</h3>
+		<br><br>
+		<input type="button" value="확  인">
+		<br><br>
+		<div id="result1">
+			<img src="../images/Desert.jpg">
+			<img src="../images/Tulips.jpg">
+			<img src="../images/딸기스무디.jpg">
+			<img src="../images/단풍.jpg">
+			<img src="../images/사막.jpg">
+		</div>
+	</div>
+</body>
+</html>

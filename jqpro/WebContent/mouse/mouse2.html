@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+<link rel="stylesheet" href="../css/rightmouse.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+<script src="../js/mouse.js"></script>
+
+<script type="text/javascript">
+
+(function() {
+
+	  /* 마우스 오른쪽 메뉴 변수 */
+	  var test = document.getElementById("context-menus");
+
+	  /* 마우스 클릭 리스너를 초기 실행시킨다. */
+	  function init() {
+	    rightMouseListener();
+	    leftMouseListener();
+	  }
+
+	  /* 마우스 왼클릭 감지 */
+	  function leftMouseListener() {
+	    document.addEventListener("click", function(e) {
+	      toggleOnOff(0);
+	    })
+	  }
+
+	  /* 마우스 우클릭 감지 */
+	  function rightMouseListener() {
+	    document.addEventListener("contextmenu", function(e) {
+	      event.preventDefault();
+	      toggleOnOff(1);
+	      showMenu(e.x, e.y);
+	    });
+	  }
+
+	  /* 마우스 메뉴 on & off */
+	  function toggleOnOff(num) {
+	    num === 1 ? test.classList.add("active") : test.classList.remove("active");
+	  }
+
+	  /* 마우스 클릭한 지점에서 메뉴 보여줌 */
+	  function showMenu(x, y) {
+	    console.log(test);
+	    test.style.top = y + "px";
+	    test.style.left = x + "px";
+
+	  }
+
+	  init();
+	})();
+
+</script>
+
+
+
+</head>
+<body>
+  <h1>마우스 오른쪽 메뉴 테스트</h1>
+
+  <div class=task id=task1>
+    <ul>
+      <li>Avi Veri</li>
+      <li>ut suavibus sim moribus neque irae indulgeam.</li>
+    </ul>
+
+  </div>
+
+  <div class=task id=task2>
+    <ul>
+      <li>Existimatione </li>
+      <li>ecordatione genitoris mei ad verecundiam et animum viro dignum excitari debeo.</li>
+    </ul>
+
+  </div>
+
+  <div class=task id=task3>
+    <ul>
+      <li>A proavo habui</li>
+      <li>quod publicos litterarum ludos non frequentavi, et domi bonis praeceptoribus usus sum</li>
+    </ul>
+
+  </div>
+
+  <div class=task id=task4>
+    <ul>
+      <li>Ab educatore</li>
+      <li>Venetianus neve parmularius aut scutarius fierem, ut labores sustinerem, paucis indigerem</li>
+    </ul>
+
+  </div>
+
+  <div class=task id=task5>
+    <ul>
+      <li>Diognetus me monuit</li>
+      <li>ne studium in vanas res conferrem neque iis fidem haberem, quae a praestigiatoribus et impostoribus de incantationibus et </li>
+    </ul>
+
+  </div>
+
+
+  <!-- 마우스 오른쪽 메뉴 -->
+  <div id="context-menus" class="context-menus">
+    <ul>
+      <li>1번 메뉴</li>
+      <li>2번 메뉴</li>
+      <li>3번 메뉴</li>
+      <li>4번 메뉴</li>
+      <li>5번 메뉴</li>
+    </ul>
+  </div>
+  <!-- //마우스 오른쪽 메뉴 -->
+
+</body>
+
+
+</html>

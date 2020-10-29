@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+
+	hr {
+		clear: both;
+	}
+	
+	input[name=reply] {
+		height: 45px;
+		vertical-align: top;
+	}
+	
+	#modifyForm{
+		display: none;
+	}
+	
+	#wModal{
+		display: none;
+	}
+
+
+</style>
+
+<script src="../js/board.js"></script>
+
+<link href="../css/board.css" rel="stylesheet">
+
+<script type="text/javascript">
+	
+	// 객체생성 - 동적으로 속성을 추가헤서 사용 - bonum, name, cont ;
+	reply = { }; // 객체생성 0728 //안에아무것도없어도 동적으로 추가해서 쓸수 있다.
+
+	write = { }; // name.co ,,, 등 추가해서 사용가능
+	
+	
+	
+	
+	$(function() {
+		// board.js의 함수 호출 - ajax요청이 실행 된다.
+		readpageServer(1);		
+		
+		// 페이지 번호 클릭 하면 이벤트 설정
+		$('#btngroup1').on('click','.paging', function() {
+			
+			$('body').append($('#modifyForm'));
+			$('#modifyForm').hide();
+			
+			currentpage = $(this).text().trim();
+			readpageServer(currentpage);
+			
+		})
+		
+		// 이전버튼 클릭하면
+		$('#btngroup1').on('click','.previous a', function() {
+
+			$('body').append($('#modifyForm'));
+			$('#modifyForm').hide();
+
+			currentpage = parseInt($('.paging:first').text().trim())-1;
+			readpageServer(currentpage);
+			
+			
+		})
+		// 다음버튼 클릭하면
+		$('#btngroup1').on('click','.next a', function() {
+
+			$('body').append($('#modifyForm'));
+			$('#modifyForm').hide();
+			
+			
+			currentpage = parseInt($('.paging:last').text().trim()) + 1;
+			readpageServer(currentpage);
+			
+		})
+		
+		// 버튼에 대한 이벤트
+		$('.box').on('click', '.action', function() {
+			actionname = $(this).attr('name');
+			idx = $(this).attr('idx');
+			
+			if(actionname == "modify"){
+				
+				viewServer(); //idx가 전역변수라 안넣어줘도댐
+				
+				//$('#uModal').modal('show');
+				
+				
+			}else if(actionname == "delete") {
+				//alert(idx + "번 글 삭제")
+				deleteServer(idx, this);
+				
+			} else if (actionname == "reply") {
+				//alert(idx + "번 글에 댓글을 답니다.")
+				//reply 테이블 - renum, bonum, name, cont, redate 로그인하면 세션에 정보를담는다. session.setattr~ session.getattr~~ 지금은 임의대로 name은 원래는 로그인정보에서
+				//reply객체에 정보를 담는다.
+				
+				reply.bonum = idx;				
+				vname1 = String.fromCharCode(Math.random()*26 + 65); // 대문자 영문자 65~90
+				vname2 = String.fromCharCode(Math.random()*26 + 97); // 소문자 영문자 97~122
+				vname3 = Math.floor(Math.random()*100+1);
+				
+				reply.name = vname1 + vname2 + vname3;
+				console.log(reply.name);
+				
+				reply.cont = $(this).parent().find('textarea').val();
+				console.log(reply.cont);
+				
+				replySaveServer(this); // reply객체 비동기를 이용해서 서버로 보낸다. js에만든다// this를 넘김
+				$(this).parent().find('textarea').val(""); //set으로 값 지운다 // 동기면 앞에가 모두 완료되어야 뒤가 순서대로 진행된다.
+			} else if (actionname == "list") {
+				reply.bonum = idx;
+				replyListServer(this);
+			} else if (actionname == "r_modify") { // parent는 바로위부모 s는 조상으로가서 찾는다.
+				
+				redx = $(this).attr('idx');
+				
+				
+				//댓글 수정을 클릭 했을경우 이미 다른 댓글에 폼이 열려 있는경우 가져간 내용을 다시 댓글로 달고 댓글수정 누른곳으로 돌아가야한다.
+				if ( $('#modifyForm').css('display') != "none" ) {
+					// 이미 열려 있는 폼에서 원래 내용을 가져와서 다시 원래 span태그에 원래모양으로 변환시키고 댓글수정폼을 body로 다시 append시킨다 
+					// 위 내용을 댓글 수정에서 취소버튼 클릭할때도 똑같은 작업을 수행한다.
+					replyReset();
+				}
+				
+				//<br>이 들어있기때문에 html으로 가져온다
+				//text area로 보내줘야하니까 br의 형태를 바꾸어야한다.
+				
+				//댓글 내용가져오기 - 
+				modifyCont = $(this).parents('.rep').find('.cont').html().replace(/<br>/g, "\n"); //글로벌에서 br찾아서 \n으로 바꾸어라
+				
+				// textarea에 출력하기 위해 val
+				// 댓글수정 폼에 댓글 내용을 출력
+				$('#modifyForm #text').val(modifyCont);
+				
+				// 댓글수정폼을 댓글 내용자리에 추가
+				$(this).parents('.rep').find('.cont').empty().append($('#modifyForm'));
+				
+				// 댓글 수정폼 보이기
+				$('#modifyForm').show();
+				
+			} else if (actionname == "r_delete") {
+				replyDeleteServer(idx, this);
+				
+				//$(this).parents('.rep').remove();
+				
+				
+			} else if (actionname == "reset") {
+				//댓글 수정폼에서 취소버튼 클릭
+				replyReset();
+			} else if (actionname == "reok") {
+				// 댓글 수정폼에서 확인버튼클릭
+				//alert(redx + "댓글번호를 수정합니다.")
+				
+				// 새로 수정된 내용을 가져오기;
+				modifyCont = $('#modifyForm #text').val();
+				spanTag = $('#modifyForm').parent();
+				
+				// DB에 적용시킬 수정 내용 - reply객체에 추가 ( cont, renum )
+				reply.cont = modifyCont;
+				reply.renum = redx;
+				replyUpdateServer();
+				
+				$('body').append($('#modifyForm'));
+				$('#modifyForm').hide();
+				
+				spanTag.html(modifyCont.replace(/\n/g, "<br>"));
+				
+				
+			}
+			
+		})//event
+		
+		
+		//댓글 수정버튼을중복으로 클릭하거나 댓글수정폼에서 취소버튼클릭할때
+		replyReset = function(){
+			
+			//수정폼의 부모
+			spanTag = $('#modifyForm').parent();
+			
+			// 수정폼을 잘라내기해서 body로 이동
+			$('body').append($('#modifyForm'));
+			
+			$('#modifyForm').hide();
+			
+			//원래내용을 다시 출력
+			spanTag.html(modifyCont.replace(/\n/g, "<br>"));
+			
+		}
+		
+		// 글쓰기 버튼이벤트-   modal창띄우기 data-toggle="modal" data-target="#myModal"
+		
+		
+		// 글쓰기 모달창에서 데이터 입력후에 전송버튼 클릭
+		$('#send').on('click', function() {
+			
+			/* document.wform.writer.value
+			document.wform.subject.value
+			
+			$('#').val() */
+			
+			/* 
+			w = $('#writer').val();
+			s = $('#subject').val();
+			m = $('#mail').val();
+			p = $('#password').val();
+			c = $('#content').val();
+			*/
+			
+			/*
+			write.writer = w; //vo dd form의 name과일치
+			write.subject = s;
+			write.mail = m;
+			write.password = p;
+			write.content = c;
+			*/
+			
+			writeServer();
+			// ajax전송시  data : write, 객체를 보낼수있다.
+			// data : values << json형식의 데이터로 했을때 { "" :  }
+			
+			// 모달창 닫기
+			$('#wModal').modal('hide');
+			
+			// 모달창의 입력데이터 지우기
+			$('.indata').val("");
+			//location.href="board.html";
+			
+		})
+		
+		// 수정모달창에서 데어터 수정후 전송버튼 클릭
+		$('#usend').on('click', function() {
+			
+			updateboardServer()
+			
+			// 모달창 닫기
+			$('#uModal').modal('hide');
+			
+			//,모달창의 입력데이터 지우기
+			$('.indata').val("");
+		})
+		
+		
+	})
+
+</script>
+
+</head>
+<body>
+	
+	<!-- 댓글수정폼 -->
+	<div id="modifyForm">
+		<textarea id="text" rows="5" cols="50"></textarea>
+		<input type="button" value="확인" class="action" name="reok" id="btnOK"> 
+		<input type="button" value="취소" class="action" name="reset" id="btnReset"> 
+	</div>
+	<br>
+	<br>
+	
+    <input data-toggle="modal" data-target="#wModal" type="button" id="write" value="글쓰기"><br><br> 
+	
+	<div class="box">
+	
+	</div>
+	
+	<div id="btngroup1"></div>
+	
+	
+<!-- 글쓰기Modal -->
+<div id="wModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">글쓰기</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="wform" name="wform"> <!-- document.wform.writer 네임으로 접근법 -->
+	      	이름 <input class="indata" type="text" id="writer" name="writer"><br> <!--DB 컬럼이랑 name똑같이 -->
+	      	제목 <input class="indata" type="text" id="subject" name="subject"><br>
+	      	비밀번호 <input class="indata"  type="password" id="password" name="password"><br>
+	      	내용<br>
+	      	<textarea class="indata" id="content" name="content" rows="10" cols="50"></textarea><br>
+	      	이메일 <input class="indata" type="text" id="mail"  name="mail"><br>
+      		    <input id="send" type="button" value="전송">
+      	
+      	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+	
+<!-- 글수정폼 Modal -->
+<div id="uModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">글수정</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="uform" name="uform"> <!-- document.wform.writer 네임으로 접근법 -->
+      		<input class="indata" type="hidden" id="useq" name="seq">
+	      	이름 <input class="indata" type="text" id="uwriter" name="writer"><br> <!--DB 컬럼이랑 name똑같이 -->
+	      	제목 <input class="indata" type="text" id="usubject" name="subject"><br>
+	      	비밀번호 <input class="indata"  type="password" id="upassword" name="password"><br>
+	      	내용<br>
+	      	<textarea class="indata" id="ucontent" name="content" rows="10" cols="50"></textarea><br>
+	      	이메일 <input class="indata" type="text" id="umail"  name="mail"><br>
+      		    <input id="usend" type="button" value="전송">
+      	
+      	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>	
+
+
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function(){
+		
+		//alert($('body').html());
+		//alert($('body').text());
+		
+		//$('input').click(function{});
+		$('.box1 input').on('click', function(){
+			
+			
+			// 방법1)
+			//ptag = $('<p onclick="proc1()" id="p1" class="p1" title="hello">안녕하세요 </p>');
+		
+			//ptag.appendTo('#result1');
+			
+			// 방법2)
+			ptag = $('<p></p>', {
+				'id' : 'p1',
+				'class' : 'p1',
+				'title' : 'hello',
+				'text' : '안녕하세요',
+				'click' : function(){
+					$(this).css('color','crimson').css('border', '1px solid blue')
+				}
+			})
+			
+			ptag.appendTo('#result1');
+	
+		})
+		
+		
+		$('.box2 input').on('click', function(){
+			imgtag = $('<img>', { // margin 같은건 안들어감 스타일에서 줘야한다. 넓이 높이만 됨
+				'width' : '100px',
+				'height' : '100px',
+				'src' : '../images/등대.jpg',
+				'click' : function(){
+					$(this).css('border', '10px solid blue')
+				}
+			})
+			
+			imgtag.appendTo('#result2');
+			
+		})
+		
+		
+		
+	})
+	
+	
+	
+
+</script>
+
+<style type="text/css">
+
+	img {
+		margin: 10px;
+	}	
+
+</style>
+
+
+</head>
+<body>
+
+	<div class="box box1">
+		<h3>1. 새로운 요소 생성</h3>
+		확인 버튼 클릭하면 새로운 요소 p를 생성 <br>
+		id='result1'에 추가한다.
+		<br><br>
+		<input type="button" value="확  인">
+		<br><br>
+		<div id="result1"></div>
+	</div>
+	
+	<div class="box box2">
+		<h3>2. 새로운 요소 생성</h3>
+		이미지 추가 버튼 클릭하면 새로운 요소 img를 생성 <br>
+		id='result2'에 추가한다.
+		<br><br>
+		<input type="button" value="이미지추가">
+		<br><br>
+		<div id="result2"></div>
+	</div>
+	
+</body>
+</html>

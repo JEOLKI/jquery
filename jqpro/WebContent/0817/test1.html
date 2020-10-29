@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<!-- 외부 스크립트 : jQuery 라이브러리 -->
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script>
+// 내부 스크립트
+
+	/*
+	// script 방식
+	window.onload = function() {
+		document.querySelector('#result1')
+		document.getElementById('result1')
+	}
+	
+	// jQuery 방식
+	$(document).ready(function(){
+		$('#result1')
+	})
+	
+	
+	// 혼합 javascript를 대채하는 언어가 아니라 같이 사용할수 있다.
+	$(document).ready(function(){
+		document.querySelector('#result1')
+		document.getElementById('result1')
+	})
+	
+	window.onload = function() {
+		$('#result1')
+	}
+	
+	$(document).ready(function(){
+		$('#result1')
+	})
+	
+	// 가능한 표현
+	$(function() {
+		$('result1')
+	})
+	*/
+
+	//스크립트가 먼저실행된다.
+	$(document).ready(function(){
+		$('#inp1').on('click', function(){
+			//$('#result1').css('background-color', 'cyan');
+			document.querySelector('#result1').style.backgroundColor = 'pink';
+		})
+		
+	})
+	
+	
+</script>
+
+
+
+</head>
+<body>
+
+	<div class="box">
+		<h3>1. jquery</h3>
+		<br><br>
+		<input id="inp1" type="button" value="확  인">
+		<br><br>
+		<div id="result1"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+	
+	$(function(){
+		$('.box1 > input').on('click', function() {
+			$('#result1 form :enabled').css('border',' 2px solid blue');
+			$('#result1 form :disabled').css('border',' 2px solid red');
+		})
+		
+		$('#start').on('click', function() {
+			
+			a = setInterval(() => {
+				vimg = $('img:first')
+				vimg.appendTo('#result2')
+			}, 500);
+			
+			//$(this).attr('disabled', 'disabled')
+			$(this).prop('disabled', true);
+			
+		})
+		
+		$('#end').on('click', function() {
+			clearInterval(a);
+			
+			$('#start').prop('disabled', false);
+		})
+		
+	})
+
+
+</script>
+
+<style type="text/css">
+
+	img {
+		width: 200px;
+		height: 200px;
+	}
+
+</style>
+
+</head>
+<body>
+
+	<div class="box box1">
+		<h3>1. 상태필터</h3>
+		<br><br>
+		<input type="button" value="확  인">
+		<br><br>
+		<div id="result1">
+			<form> 
+				<input type="text" name="id" ><br>
+				<input type="password" name="pass"><br>
+
+				<select name="disSelect" disabled> <!-- disabled는 사용불가능한 상태 -->
+     				<option>Option1</option>
+    			 	<option>Option2</option>
+   					<option>Option3</option>
+      				<option>Option4</option>
+				</select>
+				<br>
+				<textarea name="enTextarea" rows=10 cols=20 >text</textarea><br>
+				<input type="button" value="확인" disabled> <br>
+			</form>
+		</div>
+	</div>
+	
+	<div class="box box2">
+		<h3>2. 상태필터</h3>
+		
+		확인 버튼 클릭하면 1초마다 한번씩 이미지가 회전된다, 확인 버튼을 사용불가능하도록 설정 <br>
+		attr('disabled', 'disabled') , attr('disabled', true)<br>
+		prop('disabled', true)<br><br>
+		
+		종료버튼 클릭하면 실행을 종료한다. 확인버튼을 사용 가능하도록 설정한다.<br>
+		prop('disabled', false)
+		
+		<br><br>
+		
+		<!-- html() : 태그 가져오기
+		text() : 문자만 가져오기
+		attr() : 속성가져오기
+		val() : input, textarea, select 태그에서 값을가져옴 -->
+		
+		<!-- getAttribute => attr('type') : 타입 불러오기 -->
+		<!-- setAttribute => attr('type', 'button') : 타입을 버튼으로 설정하라 -->
+		<input type="button" id="start" value="확  인"> 
+		<input type="button" id="end" value="종  료">
+		<br><br>
+		<div id="result2">
+			<img alt="" src="../images/국화.jpg">
+			<img alt="" src="../images/꽃.jpg">
+			<img alt="" src="../images/단풍.jpg">
+			<img alt="" src="../images/딸기스무디.jpg">
+			<img alt="" src="../images/산.png">
+		</div>
+	</div>
+	
+</body>
+</html>

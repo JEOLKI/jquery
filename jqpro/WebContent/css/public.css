@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+
+body {font-family:'문제부 돋움체';}
+
+@font-face {
+    font-family: 'Arial';
+    
+    unicode-range:U+0041-005A, U+0061-007A, U+0030-0039;
+}
+
+
+
+pre{
+	background : #DAD9FF;
+	border : 5px dashed blue;
+	font-size : 1.3em;
+	padding: 10px;
+}
+
+.box{
+	background: linear-gradient(-90deg, #FFD8D8, #FAF4C0, #FAECC5);
+	height: auto;
+	margin-top: 10px;
+	padding: 20px;
+	border-radius: 30px;
+}
+
+.box div{
+	border: 1px dotted orange;
+	padding: 20px;
+	height: auto;
+	margin: 10px 5px;
+	border-radius: 30px;
+}
+
+.box input[type=button], .box input[type=submit], .box input[type=reset]{
+	 background: #F6F6F6;
+	 width: 100px;
+	 font-weight: bold;
+	 padding: 10px 5px;
+	 border-radius: 20px;
+}

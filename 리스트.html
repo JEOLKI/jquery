@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html>
+	<meta charset = "UTF-8">
+	<!-- 외부스타일 적용 : 충돌되면 내부먼저 실행-->
+	<link rel="stylesheet" href="css/public.css">
+	
+	<style>
+		
+		body div{
+			border : 1px solid skyblue;
+			width : 350px;
+			height : 200px;
+			margin : 10px;
+			display : inline-block;
+			overflow : auto;
+		}
+		
+		img {
+			width : 50px;
+			height : 30px;
+		}
+		#d1{
+			border : 3px solid red;
+		}
+	
+	
+	</style>
+	
+	<body>
+	  <pre>
+		<<작성팁>>
+		테두리 설정 
+			두께(px)
+			스타일(solid, double, inset, outset, dotted, dashed)
+		    색상
+			border : 1px solid orange;
+		
+		넘치는 항목 처리 :
+			overflow : auto;
+			overflow : hidden;
+			overflow : scroll;
+		
+		외부스타일 작성 및 적용
+			작성 : *.css로 저장
+			적용 : &lt;link rel="stylesheet" href="css/public.css"&gt;
+	  </pre>
+	  
+	  <div id="d1">
+		<h3>번호 없는 리스트</h3>
+		텍스트
+		<ul>
+			<li>아메리카노</li>
+			<li>카푸치노</li>
+			<li>카페라떼</li>
+			<li>에스프레소</li>
+		</ul>
+	  </div>
+	  
+	  <div>
+		<h3>번호 없는 리스트</h3>
+		이미지
+		<ul>
+			<li><img src="images/아메리카노.jpg" alt="아메리카노"></li>  <!-- alt 이미지가없으면 대신나옴 -->
+			<li><img src="images/카푸치노.jpg" alt="카푸치노"></li>
+			<li><img src="images/카페라떼.jpg" alt="카페라떼"></li>
+			<li><img src="images/에스프레소.jpg" alt="에스프레소"></li>
+		</ul>
+	  </div>
+	  
+	  <div>
+		<h3>번호 없는 리스트</h3>
+		a링크
+		<ul>
+			<li><a href="Web 커피메뉴.html" target="_blank">아메리카노</a></li>
+			<li><a href="Web 커피메뉴.html" target="_blank">카푸치노</a></li>
+			<li><a href="Web 커피메뉴.html">카페라떼</a></li>
+			<li><a href="Web 커피메뉴.html">에스프레소</a></li>
+	  </div>
+		</ul>
+	  
+	  <div>
+		<h3>번호 없는 리스트</h3>
+		a링크 이미지
+		<ul>
+			<li><a href="아메리카노.html" target="_blank"><img src="images/아메리카노.jpg" alt="아메리카노"></a></li>
+			<li><a href="카푸치노.html" target="_blank"><img src="images/카푸치노.jpg" alt="카푸치노"></a></li>
+			<li><a href="카페오레.html" target="_blank"><img src="images/카페라떼.jpg" alt="카페라떼"></a></li>
+			<li><a href="에스프레소.html" target="_blank"><img src="images/에스프레소.jpg" alt="에스프레소"></a></li>
+		</ul>
+	  </div>
+	  
+	  <div>
+		<h3>번호 없는 리스트</h3>
+		다른 리스트
+		<ul>
+			<li> UL속에 UL-1
+				<ul>
+					<li>UL-1속에 UL-1속에 OL
+						<ol>
+							<li>OL-1</li>
+							<li>OL-2</li>
+						</ol>
+					</li>
+					<li>UL-1속에 UL-2</li>
+				</ul>
+			</li>
+			
+			<li> UL속에 UL-2
+				<ul>
+					<li>UL-1</li>
+					<li>UL-2</li>
+				</ul>
+			</li>
+		</ul>
+	  </div>
+
+	  <hr>
+	  
+	  <div>
+		<h3>번호 있는 리스트</h3>
+		텍스트
+		<ol>
+			<li>아메리카노</li>
+			<li>카푸치노</li>
+			<li>카라멜마키아또</li>
+			<li>딸기스무디</li>
+		</ol>
+	  </div>
+	  
+	  <div>
+		<h3>번호 있는 리스트</h3>
+		이미지
+		<ol>
+			<li><img src="images/아메리카노.jpg" alt="아메리카노"></li>
+			<li><img src="images/카푸치노.jpg" alt="카푸치노"></li>
+			<li><img src="images/카라멜마키아또.jpg" alt="카라멜마키아또"></li>
+			<li><img src="images/딸기스무디.jpg" alt="딸기스무디"></li>
+		</ol>
+	  </div>
+	  
+	  <div>
+		<h3>번호 있는 리스트</h3>
+		a링크
+		<ol>
+			<li><a href="Web 커피메뉴.html" target="_blank">아메리카노</a></li>
+			<li><a href="Web 커피메뉴.html" target="_blank">카푸치노</a></li>
+			<li>카페라떼</li>
+			<li>에스프레소</li>
+		</ol>
+	  </div>
+	  
+	  <div>
+		<h3>번호 있는 리스트</h3>
+		a링크이미지
+		<ol>
+			<li><a href="Web 커피메뉴.html" target="_blank"><img src="images/아메리카노.jpg" alt="아메리카노"></a></li>
+			<li>카푸치노</li>
+			<li>카페라떼</li>
+			<li>에스프레소</li>
+		</ol>
+	  </div>
+	  
+	  <div>
+		<h3>번호 있는 리스트</h3>
+		다른 리스트
+		<ol>
+			<li>아메리카노
+				<ol>
+					<li>설탕추가</li>
+					<li>샷추가</li>
+				</ol>
+			</li>
+			
+			<li>카푸치노
+				<ol>
+					<li>우유추가</li>
+					<li>두유변경</li>
+				</ol>
+			</li>
+			
+			<li>카라멜마키아또
+				<ol>
+					<li>카라멜추가</li>
+					<li>두유변경</li>
+				</ol>
+			</li>
+			
+			<li>딸기스무디
+				<ol>
+					<li>딸기추가</li>
+					<li>무지방우유로변경</li>
+				</ol>
+			</li>
+			
+		</ol>
+	  </div>
+	  
+	  <hr>
+	  
+	  <div>
+		<h3>정의 리스트</h3>
+		<dl>
+			<dt>아메리카노</dt>
+			<dd>에스프레소에 <sup>물</sup>을 <sub>추가</sub>한 것입니다.</dd>
+			
+			<dt>카페오레</dt>
+			<dd>에스프레소에 <sup>우유</sup>를 넣은 커피입니다.</dd>
+			
+			<dt>카푸치노</dt>
+			<dd>커피 위에 <sup>우유거품</sup>을 얹은 커피입니다.</dd>
+		</dl>
+	  </div>
+		
+		
+	</body>
+</html>

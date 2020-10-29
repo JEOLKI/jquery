@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function() {
+		
+		xhr = new XMLHttpRequest();
+		
+		$('#text').on('click', function() {
+			// 보내는 데이터가 없을때는 get이 기본이다.
+			// 요청응답의 순서가 바뀌어도 상관없다 readtstate값이 4가 될때까지 기다리기 때문에
+			
+			//응답
+			xhr.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200) {
+					res = this.responseText;
+					// res =김은대/성춘향/홍길동/이쁜이/개나리/진달래
+					res = res.split("/")
+					
+					code = "<ul>";
+					$.each(res,function(i){ // (i , v) v는 i번째 변수 필수는아님
+						code += "<li>"+ res[i] +"</li>" // res[i]대신 v를 사용가능
+					})
+					code += "</ul>";
+					
+					$('#result1').html(code);
+				}
+			}			
+			
+			//요청
+			xhr.open('get', 'text.jsp', true);
+			xhr.send();
+		})
+		
+		
+		$('#jarr').on('click', function() {
+			
+			// 요청 
+			xhr.open('get', 'jsonArr.jsp', true); // true는 비동기구조
+			xhr.send();
+			
+			// 응답
+			xhr.onreadystatechange = function() {
+				
+				if (this.readyState == 4 && this.status == 200) {
+					res = JSON.parse(this.responseText); // responseXML 두개밖에없다.
+					// res는 json형태의 응답데이터 이다. 텍스트가 json형식이어야 가능하다.
+					
+					code = "<ol>";
+					$.each(res, function(i) {
+						code += "<li>" + res[i] + "</li>"
+					})
+					code += "</ol>"
+				
+					$('#result3').html(code);
+				}
+			}
+		})
+
+		$('#jobj').on('click', function() {
+			
+			// 요청
+			xhr.open('get', 'jsonObj.jsp', true);
+			xhr.send();
+			
+			// 응답
+			xhr.onreadystatechange = function() {
+				
+				if (this.readyState == 4 && this.status == 200) {
+					res = JSON.parse(this.responseText);
+					
+					code = "이름 : " + res.name + "<br>";
+					code += "전화번호 : " +res.tel+ "<br>";
+					code += "주소 : " +res.addr+ "<br>";
+					code += "이메일 : " +res.email+ "<br>";
+					code += "우편번호 : " +res.zcode+ "<br>";
+					
+					$('#result2').html(code);
+				}
+			}
+		})
+		
+		$('#joarr').on('click', function() {
+			// 요청
+			xhr.open('get', 'jsonObArr.jsp', true);
+			xhr.send();
+			
+			// 응답
+			
+			xhr.onreadystatechange = function() {
+				
+				if (this.readyState == 4 && this.status == 200) {
+					
+					res = JSON.parse(this.responseText);
+					
+					code = "";
+					$.each(res, function(i) {
+						code += "@@@ " + (i+1) +"번째 회원 자료 @@@<br>"
+						code += "이름 : " + res[i].name + "<br>";
+						code += "전화번호 : " +res[i].tel+ "<br>";
+						code += "주소 : " +res[i].addr+ "<br>";
+						code += "이메일 : " +res[i].email+ "<br>";
+						code += "우편번호 : " +res[i].zcode+ "<br><br>";
+					})
+					
+					$('#result4').html(code);
+					
+				}
+			}
+		})
+		
+		
+		
+		
+	})
+
+
+
+
+</script>
+
+</head>
+<body>
+
+	<div class="box">
+		<h3>1. data type - text/json</h3>
+		<br><br>
+		<input id="text" type="button" value="text데이터">
+		<input id="jobj" type="button" value="jsonObj데이터">
+		<input id="jarr" type="button" value="json데이터">
+		<input id="joarr" type="button" value="jsonObj배열데이터">
+		<br><br>
+		<div id="result1"></div>
+		<div id="result2"></div>
+		<div id="result3"></div>
+		<div id="result4"></div>
+	</div>
+</body>
+</html>

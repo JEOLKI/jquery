@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+	
+	$(function() {
+		$('img').on('dblclick', function() {
+			//$(this).css('display', 'none');
+			$(this).hide()
+		
+			if ($('img:visible').length < 1) {
+				//$('input[type=button]')
+				$('input:button').show();
+			}
+		})
+		
+		$('input:button').on('click', function() {
+			$(this).hide();
+			
+			//$('img').css('display', 'inline');
+			$('img').show();
+		})
+		
+		
+		// src의 속성값을 가져오기
+		// temp속성으로 설정하기
+		$('img').attr('temp', function() {
+			vsrc = $(this).attr('src');	
+			return vsrc;
+		});
+		
+		
+		// 방법 1)
+		/*$('img').on('mouseover', function() {
+			// 1. src2속성값을 가져온다.
+			vsrc2 = $(this).attr('src2');
+			
+			// 2. 1번의 값으로 src속성값으로 변경한다.
+			$(this).attr('src', vsrc2);
+			
+		})
+		
+		$('img').on('mouseout', function() {
+			
+			// 1. temp 속성의 값을 가져온다.
+			vtemp = $(this).attr('temp');
+			
+			// src의 속성값을 1번의 값으로 변경한다.
+			$(this).attr('src', vtemp);
+			
+		}) */
+		
+		
+		// 방법 2)
+		/* $('img').hover(function() {
+			
+			// 1. src2속성값을 가져온다.
+			vsrc2 = $(this).attr('src2');
+			
+			// 2. 1번의 값으로 src속성값으로 변경한다.
+			$(this).attr('src', vsrc2);
+			
+		}, function() {
+			
+			// 1. temp 속성의 값을 가져온다.
+			vtemp = $(this).attr('temp');
+			
+			// src의 속성값을 1번의 값으로 변경한다.
+			$(this).attr('src', vtemp);
+			
+		}) */
+		
+		
+		// 방법3) map형식의 이벤트 - 여러개의 이벤트를 on 안에 설정
+		$('img').on({
+			mouseover:function(){
+				// 1. src2속성값을 가져온다.
+				vsrc2 = $(this).attr('src2');
+				
+				// 2. 1번의 값으로 src속성값으로 변경한다.
+				$(this).attr('src', vsrc2);
+			},
+			mouseout:function(){
+				// 1. temp 속성의 값을 가져온다.
+				vtemp = $(this).attr('temp');
+				
+				// src의 속성값을 1번의 값으로 변경한다.
+				$(this).attr('src', vtemp);
+			}
+		})
+		
+		
+		
+		
+	})
+
+</script>
+
+<style type="text/css">
+	
+	img {
+		width: 100px;
+		height: 100px;
+	}
+	
+	input[type=button] {
+		display: none;	
+	}
+	
+</style>
+
+</head>
+<body>
+
+	<div class="box">
+		<h3>1. 이벤트  </h3>
+		mouseout : 원래 이미지로 나타남<br>
+		mouseover : 다른 이미지로 변경<br>
+		dblclick : 더블클릭. 이미지가 사라진다.<br>
+		모든 이미지가  다 사라지면 보이기 버튼이 나타난다. <br>
+		보이기 버튼을 클릭하면 사라진 이미지가 모두 나타나며 보이기 버튼은 사라진다. <br>
+		<br><br>
+		<input type="button" value="보이기">
+		<br><br>
+		<div id="result1">
+			<img alt="" src="../images/대나무숲.jpg" src2="../images/컴퓨터1.jpg">
+			<img alt="" src="../images/딸기스무디.jpg" src2="../images/쇼핑백.jpg">
+			<img alt="" src="../images/단풍.jpg" src2="../images/사자.jpg">
+			<img alt="" src="../images/뱅쇼.jpg" src2="../images/소우주.jpg">
+			<img alt="" src="../images/사막.jpg" src2="../images/호랑이.jpg">
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+

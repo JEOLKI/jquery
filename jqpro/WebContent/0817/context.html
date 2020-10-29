@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+	
+	$(function(){
+		$('p').css('color', 'red');
+		$('p', document.forms[1]).css('color', 'green');
+		
+		$('div.dd').on('click', function(){
+			$('p', this).css('font-size', '+=5px'); // 클릭하는 div안에잇는 p태그
+		})
+	})
+
+
+</script>
+
+<style type="text/css">
+
+	span {
+		color: red;
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+</style>
+
+
+</head>
+<body>
+
+	<div class="box">
+		<h3>1.$('선택자', '컨텍스트')</h3>
+		지정된 컨텍스트 범위 안에서 선택자를 선택한다. <br>
+		$(“p”); : 전체번위 내에서 p요소를 선택 <br>
+		$(“p”, document.forms[2]); : 인덱스 2번째 내에서 p요소를 선택한다. <br>
+		<span>$(‘p’, this)</span> : this(현재 수행중인 객체) 내에서 p요소를 선택<br>
+		p는 this요소의 자식이다, this는 p요소의 부모이다.
+		<br>
+		<p> 무궁화 꽃이 피엇습니다. </p>
+		
+		<div class="dd">
+		
+			<p> 첫번째 div 안에 있는 p 태그</p>
+		
+		</div>
+		<div class="dd">
+		
+			<p> 두번째 div 안에 있는 p 태그</p>
+		
+		</div>
+		<div class="dd">
+		
+			<p> 세번째 div 안에 있는 p 태그</p>
+		
+		</div>
+		
+		<form>
+			<p> 첫번째 form 안에 있는 p태그 </p>
+		
+		</form>
+		
+		<form>
+			<p> 두번째 form 안에 있는 p태그 </p>
+		
+		</form>
+		
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+	hr {
+		clear: both;
+	}
+	
+	input[name=reply] {
+		height: 45px;
+		vertical-align: top;
+	}
+
+
+</style>
+
+
+
+</head>
+<body>
+
+<div class="container">
+  <h2>Accordion 게시판</h2>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Collapsible Group 1</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse"> <!-- in이 있으면 처음에 펼쳐있다. -->
+        <div class="panel-body">
+         <p style="float: left; width: 70%;">
+         	작성자 : aaaaa &nbsp;&nbsp;&nbsp;&nbsp;
+         	조회수 : 0	    &nbsp;&nbsp;&nbsp;&nbsp;
+         	메일 : 1234   &nbsp;&nbsp;&nbsp;&nbsp;
+         	날짜 : 1234   &nbsp;&nbsp;&nbsp;&nbsp;
+         </p>
+         <p style="float: right; width: 20%;">
+         	<input type="button" name="modify" class="action" value="수정">
+         	<input type="button" name="delete" class="action" value="삭제">
+         </p>
+         <hr>
+         <p>
+           	내용 <br>
+			1234<br>
+			1234<br>         
+         </p>
+         <p>
+         	<textarea  cols="60"></textarea>
+         	<input type="button" name="reply" class="action" value="등록">
+         </p>
+        
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Collapsible Group 2</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Collapsible Group 3</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      </div>
+    </div>
+  </div> 
+</div>
+    
+</body>
+</html>

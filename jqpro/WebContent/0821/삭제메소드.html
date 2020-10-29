@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+	
+	$(function() {
+
+		// bind, delegate방식의 이벤트와 통일하게 쓰기위해서 on을 쓰는 형식으로 변경되었다.
+		
+		// bind형식의 이벤트
+		//$('#remove').click(function() {})
+		//$('#remove').bind('click', function() {})
+		$('#remove').on('click', function() {
+			$('#result1').remove();
+		})
+		
+		$('#empty').on('click', function() {
+			$('#result2').empty();
+		})
+		
+		$('.pp').on('click', function() {
+			$(this).css('font-size', '+=3px');
+		})
+		
+		
+		
+		$('#remove2').on('click', function() {
+			r3 = $('#result3').remove();
+			$('#result5').append(r3);
+		})
+		
+		$('#detach').on('click', function() {
+			r4 = $('#result4').detach();
+			r4.appendTo('#result5');
+		})
+		
+		
+		
+		
+	})
+
+
+</script>
+
+<style type="text/css">
+
+	.box1 #result1, #result3{
+		background: white;
+	}
+
+	.box1 #result2, #result4{
+		background: lightblue;
+	}
+	
+	#result5{
+		background: darkblue;
+	}
+
+
+</style>
+
+
+</head>
+<body>
+
+	<div class="box box1">
+		<h3>1. 삭제메소드 - remove와 empty</h3>
+		remove : 대상을 지운다.<br>
+		empty : 대상을 지우지 않고 내부의 내용(자식또는 후손)을 지운다.
+		<br><br>
+		<input id="remove" type="button" value="remove">
+		<input id="empty" type="button" value="empty">
+		<br><br>
+		<div id="result1">
+			<p class="pp">result1의 p태그</p>
+		</div>
+		<div id="result2">
+			<p class="pp">result2의 p태그</p>
+		</div>
+	</div>
+
+	<div class="box box2">
+		<h3>2. 삭제메소드 - remove와 detach</h3>
+		remove :  대상을 지우면서 이벤트정보도 함께 지워진다.<br>
+		detach :  대상을 지우면서 이벤트정보는 지워지지 않는다.
+		<br><br>
+		<input id="remove2" type="button" value="remove2">
+		<input id="detach" type="button" value="detach">
+		<br><br>
+		<div id="result3">
+			<p class="pp">result3의 p태그</p>
+		</div>
+		<div id="result4">
+			<p class="pp">result4의 p태그</p>
+		</div>
+		<div id="result5">
+		
+		</div>
+		
+	</div>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+
+	jQuery(function() {
+		
+		jQuery('#hid').on('click', function() {
+			
+			res = "";
+			
+			jQuery('.box1 p:hidden').each(function(i) { // i써도되고 안써도됨
+				//res += i +"번째 : " + jQuery(this).text() + "<br>";
+				res += `${i} 번째 : ${$(this).text()} <br>`;
+			})
+			
+			jQuery('#result1').html(res);
+			
+		})
+		
+		jQuery('#visi').on('click', function() {
+			
+			res ="";
+			
+			$('.box1 p:visible').each(function(i, v) { // 매개변수 2개  i:인덱스 , 변수:this
+				res += `${i} 번째 태그이름 : ${this.tagName} ${$(v).text()} <br>`;
+				// tagName은 jQuery메소드가 아니라 dom객체의 메소드이기때문에 $기호가 붙지 않는다.
+			})
+			
+			jQuery('#result2').html(res);
+			
+		})
+		
+		
+		$('#hid2').on('click', function() {
+			res = "hidden 결과 <br>";
+			$('#testForm *:hidden').each(function(i) {
+				if (this.tagName == "INPUT") { // 대문자로 비교해야한다.
+					res += "input 객체 : "
+							+ $(this).attr('name') 
+							+ " " + $(this).val() + "<br>";
+				}else {
+					res += "span 객체 : "+ this.tagName + " " + $(this).text() + "<br>";
+				}
+			})
+			
+			$('#result3').html(res);
+		})
+		
+		
+		$('#visi2').on('click', function() {
+			
+			res = "visible 결과 <br>"
+			
+			$('#testForm *:visible').each(function(i) {
+			
+				if(this.tagName == "INPUT"){
+					
+					vtype = $(this).attr('type');
+					if ( vtype == "radio") {
+						radio = "input 객체 : " + $(this).attr('name') + " ";
+						radio += $(':radio:checked').val() + "<br>";
+						
+					}else {
+						res += "input 객체 : " + $(this).attr('name') + " ";
+						res += $(this).val() + "<br>";
+					}
+					
+				}else if(this.tagName == "SPAN"){
+					res += "span 객체 : "+ this.tagName + " " + $(this).text() + "<br>";
+				}
+			})
+			res += radio;
+			$('#result4').html(res);
+		})
+		
+	})
+
+
+</script>
+
+</head>
+<body>
+
+	<div class="box box1">
+		<h3>1. visibility필터 </h3>
+		
+		hidden 속성의 요소를 result1에 출력하고 <br>
+		visible 속성의 요소를  result2에 출력
+		
+		
+		<!-- :visible => 1 2 4 
+			 :hidden => 3  -->
+		<br>
+		
+		<p> 보이는 문단</p>
+  		<p style="visibility:hidden;">숨겨진 문단</p>
+  		<p style="display:none;"> 자리를 차지 하지 못한 문단 </p>
+  		<p style="opacity:0;"> 투명한 문단</p>
+		
+		<br>
+		<input id="hid"  type="button" value="hidden">
+		<input id="visi" type="button" value="visible">
+		<br><br>
+		<div id="result1"></div>
+		<div id="result2"></div>
+	</div>
+	
+	<div class="box box2">
+		<h3>2. visibility필터 </h3>
+		
+		hidden 속성의 요소를 result3에 출력하고 <br>
+		visible 속성의 요소를  result4에 출력<br>
+		
+		<form id="testForm"> 
+			<input type="hidden" name="userAge" value="33">
+			<input type="hidden" name="userCity" value="대전">
+			I D : <input type="text" name="userID" value="hong">  
+			<span style="display:none">ID가 중복됩니다. </span> <br>  
+			이름 : <input type="text" name="userName" value="홍길동">   
+			<span style="visibility:hidden">이름을 입력하세요</span><br>  
+			성별 : <input type="radio" name="sung" value="남" checked>남자  
+			<input type="radio" name="sung" value="여">여자  
+		</form>
+		
+		<br>
+		<input id="hid2"  type="button" value="hidden">
+		<input id="visi2" type="button" value="visible">
+		<br><br>
+		<div id="result3"></div>
+		<div id="result4"></div>
+	</div>
+	
+</body>
+</html>

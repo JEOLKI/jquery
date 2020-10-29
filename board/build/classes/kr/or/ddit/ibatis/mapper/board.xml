@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+			
+<sqlMap namespace="board">
+
+
+	<select id="selectAll" resultClass="boardVO">
+	
+		 select * from board1 order by seq desc
+	
+	</select>
+	
+	<select id="selectPage" parameterClass="map" resultClass="boardVO">
+	
+		select A.* from ( select rownum as rnaum, B.* 
+							from ( select * from board1 order by seq desc ) B
+										 <![CDATA[
+										where rownum <= #end# ) A
+										where rnaum >= #start#
+										]]>
+	</select>
+		
+	<select id="getTotalCount" resultClass="int">
+	
+		select count(*) from board1
+	
+	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterClass="int">
+		delete from board1 where seq = #seq#
+	</delete>
+	
+	<!-- 글쓰기 저장 -->
+	<insert id="insertBoard" parameterClass="boardVO">
+		insert into board1
+		values(board1_seq.nextval, #subject#, #writer#, #mail#, #password#, #content#, 0, #wip#, sysdate)
+		
+		<selectKey keyProperty="seq" resultClass="int">
+			select board1_seq.currval from dual
+		</selectKey>
+		
+	</insert>
+	
+	<!-- 게시글 수정대상의 글을 가져오기 -->
+	<select id="updateSelect" parameterClass="int" resultClass="boardVO">
+		select * from board1 where seq = #seq#
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterClass="boardVO">
+		update board1 set subject=#subject#, writer=#writer#, mail=#mail#, password=#password#, content=#content#
+		where seq=#seq#
+	</update>
+	
+	
+	
+</sqlMap>
+

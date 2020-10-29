@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<style type="text/css">
+	span {
+		color: red;
+		background: yellow;
+	}
+
+</style>
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function(){
+		$('.box1 input[value="html"]').on('click', function(){
+			alert($('body').html());
+		})
+		
+		$('.box1 input[value="text"]').on('click', function(){
+			alert($('body').text());
+		})
+		
+		////////////////////////////////
+		
+		$('.box2 input[value="html"]').on('click', function(){
+			alert($('.box2').html());
+		})
+		
+		$('.box2 input[value="text"]').on('click', function(){
+			alert($('.box2').text());
+		})
+		
+		/////////////////////////////
+		
+		$('.box3 input[value="html"]').on('click', function(){
+			//p태그의 내용 가져오기 - 첫번째 p태그 한개만 가져온다.
+			//alert($('.box3 p').html());
+			
+			res = "";
+			
+			$.each( $('.box3 p'), function(i, v){ 
+				res += $(this).html() + "\n"; // this사용
+			})
+			alert(res);
+			
+			// 출력 - html('내용') - 내용속의 html 태그는 실행된다.
+			res= "";
+			res += "<span>홍길동</span><br>";
+			res += "<span>개나리</span><br>";
+			
+			//document.querySelector('#result3').innerHTML = res;
+			$('#result3').html(res);
+		})
+		
+		$('.box3 input[value="text"]').on('click', function(){
+			res="";
+			res += $('.box3 p').text();
+			alert(res);
+			
+			// 출력 - text('내용'); - 내용속에 html 태그는 글자로 인식된다.
+			res= "";
+			res += "<span>홍길동</span><br>";
+			res += "<span>개나리</span><br>";
+			
+			//document.querySelector('#result3').innerHTML = res;
+			$('#result3').text(res);
+			
+		})
+		
+		
+		
+	})
+
+
+
+
+</script>
+
+
+
+</head>
+<body>
+
+	<div class="box box1">
+		<h3>1. body내용 가져오기</h3>
+		<p>html() : body의 모든 내용 가져오기 : 태그를 포함한다.</p>
+		<p>text() : body의 모든 내용 가져오기 : 태그를 포함하지 않는다.</p>
+		<br>
+		<input type="button" value="html" >
+		<input type="button" value="text" >
+		<br><br>
+		<div id="result1"></div>
+	</div>
+	
+	<div class="box box2">
+		<h3>2. box2내용 가져오기</h3>
+		<p>html() : box2의 모든 내용 가져오기 : 태그를 포함한다.</p>
+		<p>text() : box2의 모든 내용 가져오기 : 태그를 포함하지 않는다.</p>
+		<br>
+		<input type="button" value="html" >
+		<input type="button" value="text" >
+		<br><br>
+		<div id="result2"></div>
+	</div>
+	
+	<div class="box box3">
+		<h3>3. box3의 p태그의 내용 가져오기</h3>
+		html() : <em>p의 모든 내용 가져오기 : 태그를 포함한다.</em> <br>
+		-> p 태그가 여러개일 경우에는 첫번째 요소만 가져온다.<br>
+		-> 반복문을 사용해서 모두를 다 가져온다. <br>
+		   : $.each(요소,function(v1, v2){  }) <br>
+		   : $(요소).each(function(v1, v2){  }) <br>
+		text() : <em>p의 모든 내용 가져오기 : 태그를 포함하지 않는다. 여러개인경우 모든 p태그의 문자만  </em> <br>
+		
+		<p>1<span>홍길동</span></p>
+    	<p>2<span>개나리</span></p>
+   		<p>3<span>진달래</span></p>  
+		
+		
+		
+		<br>
+		<input type="button" value="html" >
+		<input type="button" value="text" >
+		<br><br>
+		<div id="result3"></div>
+	</div>
+	
+	
+	
+</body>
+</html>

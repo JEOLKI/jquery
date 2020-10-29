@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function() {
+		
+		$('input:button').on('click', function() {
+			
+			$.ajax({
+	            url : './buyerNames.jsp',
+	            type : 'get',
+	            success : function(res){
+	               code="";
+	               $.each(res,function(i,v){
+	                  //code += "<p id='"+v.id+"'>" + v.name + "</p>";
+	                  code += `<p id= '${v.id}'>${v.name}</p>`;
+	               })
+	               
+	               $('#names').html(code);
+	               
+	            },
+	            error : function(xhr){
+	               alert("상태 : " + xhr.status);
+	            },
+	            dataType : 'json'
+	         })
+			
+		})
+		
+		
+		$('#names').on('click', 'p', function() {
+			vid = $(this).attr('id');
+			
+			$.ajax({
+				url : './buyerDetail.jsp',
+				type : 'post',
+				data : { 'id' : vid}, /* data: "id=" + vid, */
+				success : function(res) {
+					code = "<table id='tab1'>";
+					
+					code += "<tr><td>아이디</td> <td>" +res.id + "</td></tr>";
+					code += "<tr><td>이름 </td> <td> " +res.name + "</td></tr>";
+					code += "<tr><td>분류코드 </td> <td> " +res.lgu + "</td></tr>";
+					code += "<tr><td>주소</td> <td> " +res.add1 +" "+ res.add2 + "</td></tr>";
+					code += "<tr><td>우편번호 </td> <td> " +res.zip + "</td></tr>";
+					code += "<tr><td>은행 </td> <td> " +res.bank + "</td></tr>";
+					code += "<tr><td>계좌번호 </td> <td> " +res.bankno + "</td></tr>";
+					code += "<tr><td>에금주 </td> <td> " +res.bankname + "</td></tr>";
+					code += "<tr><td>이메일 </td> <td> " +res.mail + "</td></tr>";
+					code += "<tr><td>전화번호 </td> <td> " +res.comtel + "</td></tr>";
+					
+					code += "</table>"
+					
+					$('#detail').html(code);
+					
+				},
+				error : function(xhr) {
+					alert("상태 : " + xhr.status);
+				},
+				dataType : 'json'
+			
+			})
+			
+		})
+		
+	})
+
+</script>
+
+
+<style type="text/css">
+	
+	table{
+		display: inline-block;
+	}
+	
+	td{
+		width: 200px;
+		height: 40px;
+		text-align: center;
+	}
+	
+	#detail{
+		width: 500px;
+	}
+	
+	.title {
+		background: lightblue;
+	}
+	
+	p:hover{
+		background: lightblue;
+	}
+
+</style>
+
+</head>
+<body>
+
+	<div class="box">
+		<h3> 1. buyer</h3>
+		<br><br>
+		<input type="button" value="거래처관리">
+		<br><br>
+		<div id="result1">
+		
+			<table border="1">
+				<tr class="title">
+					<td>거래처이름</td>
+					<td>상세보기</td>
+				</tr>
+				<tr>
+					<td id="names"></td>
+					<td id="detail"></td>
+				</tr>
+			</table>
+		
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/public.css">
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+	
+	$(function() {
+		
+		// 확인버튼 클릭하면 서블릿 수행후 lprod의 gu, nm값을 select하여 출력한다.
+		$('input').on('click', function() {
+			
+			$.ajax({
+				url : '/jqpro/LprodList', //서블릿
+				type : 'get',
+				dataType : 'json',
+				error : function(xhr) {
+					alert("상태 : " + xhr.status);
+				},
+				success : function(res) {
+					
+					code = "";
+					// 방법 2)
+					$('#lprod').empty(); // 그전거 지우고 append해야 쌓이지 않는다.
+					// remove는 select자체가 지워진다.
+					
+					$.each(res, function(i,v) {	
+						//방법 1)
+						//code += "<option value='"+ v.gu +"'> " + v.nm + "</option>";
+						
+						//방법 2)
+						code = $('<option></option>', {
+							'value' : v.gu,
+							'text'  : v.nm
+						})
+						
+						//방법 2)
+						$('#lprod').append(code);
+	
+						$('#lprod').trigger('change') // lprod change로 간다.
+					})
+					//방법 1)
+					//$('#lprod').html(code);
+					
+				}//success
+			})//ajax
+		})//click
+		
+		//lprod제품을 선택하면 - option value값을 가져온다
+		// 요청시 서블릿으로 보낸다.
+		// 클릭이벤트를 주거나 change이벤트를준다.
+		$('#lprod').on('change', function() {
+			l_gu = $(this).val(); // lprod_gu
+			
+			$.ajax({
+				url : '/jqpro/ProdList', //gu를 ProdList에 가져간다
+				type : 'post',
+				data : {"gu" : l_gu },
+				dataType : 'json',
+				success : function(res) {
+					
+					code = "";
+					$('#prod').empty(); // 그전거 지우고 append해야 쌓이지 않는다.
+					
+					if (res.sw == "ok") {
+						//data가 배열이다.
+						$.each(res.data, function(i,v) {
+
+							code = $('<option></option>', {
+								'value' : v.id,
+								'text'  : v.name
+							})
+						
+							$('#prod').append(code);
+							$('#prod').trigger('change') //$('#prod').on('change' 로간다
+
+						})
+						
+					}else if (res.sw == "no") {
+						
+							code = $('<option></option>', {
+								'value' : '0',
+								'text'  : "데이터 없음"
+							})
+						
+							$('#prod').append(code); 
+							
+							vimg = $('<img>' , {
+										'src' : '../images/spongebob.png',
+										'width' : '300px',
+										'height' : '300px'
+							})
+							
+							$('#detail').empty().append(vimg)
+							
+							
+					}
+					
+					/* $.each(res, function(i,v) {
+						
+						
+						code = $('<option></option>', {
+							'value' : v.id,
+							'text'  : v.name
+						})
+						
+						$('#prod').append(code); 
+					
+					}) */
+					
+					
+					
+				},
+				error : function(xhr) {
+					alert("상태 : " + xhr.status);
+				},
+			})
+			
+			
+		})
+		
+		
+		//prod의 상품을 선택하면 option value의  값인 prod_id를 서블릿으로 보낸다.
+		$('#prod').on('change', function() {
+		
+			pid = $(this).val();
+			
+			console.log(pid);
+			
+			$.ajax({
+				url : '/jqpro/ProdDetail',
+				type : 'post',
+				data : {'pid' : pid }, //pid를 받아서 넘어간다.
+				success : function(res) {
+					code = "<table border='1'>";
+					code += "<tr>";
+					code += "<td>항목</td>";
+					code += "<td>내용</td>";
+					code += "</tr>";
+					
+					code += "<tr>";
+					code += "<td>PROD_ID</td>";
+					code += "<td>"+res.id+"</td>";
+					code += "</tr>";
+					
+					code += "<tr>";
+					code += "<td>PROD_NAME</td>";
+					code += "<td>"+res.name+"</td>";
+					code += "</tr>";
+					
+					code += "<tr>";
+					code += "<td>PROD_LGU</td>";
+					code += "<td>"+res.lgu+"</td>";
+					code += "</tr>";
+					
+					code += "<tr>";
+					code += "<td>PROD_BUYER</td>";
+					code += "<td>"+res.buyer+"</td>";
+					code += "</tr>";
+					
+					code += "<tr>";
+					code += "<td>PROD_SALE</td>";
+					code += "<td>"+res.sale+"</td>";
+					code += "</tr>";
+
+					code += "<tr>";
+					code += "<td>PROD_OUTLINE</td>";
+					code += "<td>"+res.outline+"</td>";
+					code += "</tr>";
+					
+					code += "<tr>";
+					code += "<td>PROD_SIZE</td>";
+					code += "<td>"+res.size+"</td>";
+					code += "</tr>";
+					
+					code += "<tr>";
+					code += "<td>PROD_COLOR</td>";
+					code += "<td>"+res.color+"</td>";
+					code += "</tr>";
+					
+					code += "</table>"
+					
+					$('#detail').html(code);				
+					
+					
+				},
+				error : function(xhr) {
+					alert("상태 : " + xhr.status);
+				},
+				dataType : 'json'
+			
+			
+			})
+			
+		})
+		
+		
+		
+		
+		
+		
+		
+	})//$(function)
+	
+
+
+</script>
+
+<style type="text/css">
+
+	td{
+		padding: 10px;
+	}
+	
+	table {
+		border-collapse: collapse;
+	}
+	
+	tr:nth-child(1) {
+		background: lightblue;
+	}
+
+</style>
+
+
+</head>
+<body>
+
+	<div class="box">
+		<h3>1. lprod_prod  </h3>
+		<br><br>
+		<input type="button" value="확  인">
+		<br><br>
+		<div id="result1">
+			<select id="lprod">
+			</select>
+
+			<select id="prod">
+			</select>
+			
+			<div id="detail">
+			
+			</div>
+		</div>
+	</div>
+</body>
+</html>
